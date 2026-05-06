@@ -37,7 +37,7 @@ const styles = `
   }
 
   .input-row.focused {
-    border-color: #c8f04a;
+    border-color: #e05c2a;
   }
 
   .input {
@@ -47,13 +47,13 @@ const styles = `
     outline: none;
     font-family: 'DM Mono', monospace;
     font-size: 22px;
-    color: #e8e8e8;
+    color: #1a1a1a;
     padding: 14px 0;
-    caret-color: #c8f04a;
+    caret-color: #e05c2a;
   }
 
   .input::placeholder {
-    color: #2e2e2e;
+    color: #ccc;
   }
 
   .cursor-bar {
@@ -63,8 +63,7 @@ const styles = `
     transform: translateY(-50%);
     width: 2px;
     height: 22px;
-    background: #c8f04a;
-    opacity: 0;
+    background: #e05c2a;
     transition: opacity 0.2s;
     animation: blink 1s step-end infinite;
   }
@@ -88,7 +87,7 @@ const styles = `
   .display-name {
     font-family: 'DM Serif Display', serif;
     font-size: clamp(42px, 10vw, 80px);
-    color: #f0f0f0;
+    color: #1a1a1a;
     line-height: 1;
     letter-spacing: -0.02em;
     transition: opacity 0.15s;
@@ -98,7 +97,7 @@ const styles = `
   .display-name.empty {
     font-family: 'DM Serif Display', serif;
     font-style: italic;
-    color: #222;
+    color: #d8d3cb;
     font-size: clamp(28px, 6vw, 48px);
     user-select: none;
   }
@@ -116,7 +115,7 @@ const styles = `
   .accent-line {
     margin-top: 16px;
     height: 2px;
-    background: #c8f04a;
+    background: #e05c2a;
     transform-origin: left;
     transform: scaleX(0);
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -142,7 +141,7 @@ export default function NameInput() {
             id="name-field"
             className="input"
             type="text"
-            placeholder="type here"
+            placeholder="type here…"
             value={name}
             autoComplete="off"
             spellCheck={false}
