@@ -1,122 +1,177 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const styles = `
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background: #f5f2ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .wrapper {
+    width: 100%;
+    max-width: 560px;
+    padding: 0 2rem;
+  }
+
+  .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .input-row {
+    position: relative;
+    border-bottom: 1px solid #d8d3cb;
+    transition: border-color 0.3s;
+  }
+
+  .input-row.focused {
+    border-color: #c8f04a;
+  }
+
+  .input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    color: #e8e8e8;
+    padding: 14px 0;
+    caret-color: #c8f04a;
+  }
+
+  .input::placeholder {
+    color: #2e2e2e;
+  }
+
+  .cursor-bar {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 22px;
+    background: #c8f04a;
+    opacity: 0;
+    transition: opacity 0.2s;
+    animation: blink 1s step-end infinite;
+  }
+
+  .input-row.focused .cursor-bar {
+    opacity: 1;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .preview-area {
+    margin-top: 64px;
+    min-height: 120px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .display-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(42px, 10vw, 80px);
+    color: #f0f0f0;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    transition: opacity 0.15s;
+    word-break: break-word;
+  }
+
+  .display-name.empty {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    color: #222;
+    font-size: clamp(28px, 6vw, 48px);
+    user-select: none;
+  }
+
+  .display-name span {
+    display: inline-block;
+    animation: slideUp 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .accent-line {
+    margin-top: 16px;
+    height: 2px;
+    background: #c8f04a;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .accent-line.visible {
+    transform: scaleX(1);
+  }
+`;
+
+export default function NameInput() {
+  const [name, setName] = useState("");
+  const [focused, setFocused] = useState(false);
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      <style>{styles}</style>
+      <div className="wrapper">
+        <label className="label" htmlFor="name-field">Enter your name</label>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        <div className={`input-row ${focused ? "focused" : ""}`}>
+          <input
+            id="name-field"
+            className="input"
+            type="text"
+            placeholder="type here"
+            value={name}
+            autoComplete="off"
+            spellCheck={false}
+            onChange={(e) => setName(e.target.value)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+          />
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+        <div className="preview-area">
+          {name.trim() ? (
+            <div>
+              <div className="display-name" key={name}>
+                {name.split("").map((char, i) => (
+                  <span key={`${char}-${i}`} style={{ animationDelay: `${i * 0.015}s` }}>
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                ))}
+              </div>
+              <div className="accent-line visible" />
+            </div>
+          ) : (
+            <div>
+              <div className="display-name empty">your name appears here</div>
+              <div className="accent-line" />
+            </div>
+          )}
+        </div>
+      </div>
     </>
-  )
+  );
 }
-
-export default App
